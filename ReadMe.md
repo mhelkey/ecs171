@@ -22,4 +22,8 @@ According to the CDC, heart disease is the leading cause of death in the US. To 
 
 ## Analysis
 
-We used the scikit-learn Python library in a [jupyter notebook](main.ipynb). After performing exploratory data anlysis with a pairplot and a correlation matrix, we label encoded our categorical variables. We opted for one-hot encoding for encoding the race of the person, as race is not a scale, nor is it binary. We then explored the distributions of race in our data set and discovered that over 75% of the data is listed as white. This could lead to our final model being better at predicting heart disease in white people than in other races. 
+We used the scikit-learn Python library in a [jupyter notebook](main.ipynb). After performing exploratory data anlysis with a pairplot and a correlation matrix, we label encoded our categorical variables. We opted for one-hot encoding for encoding the race of the person, as race is not a scale, nor is it binary. We then explored the distributions of race in our data set and discovered that over 75% of the data is listed as white. This could lead to our final model being better at predicting heart disease in white people than in other races. Finally, we normalized the numerical variables in our data to be between 0 and 1.
+
+## Model
+
+Our initial model was built with three layers: an input layer with a tanh activation function, a hidden layer with a relu activation function, and an output layer with a sigmoid activation function, since our aim is to do binary classification.
