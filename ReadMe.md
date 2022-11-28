@@ -27,3 +27,7 @@ We used the scikit-learn Python library in a [jupyter notebook](main.ipynb). Aft
 ## Model
 
 Our initial model was built with three layers: an input layer with a tanh activation function, a hidden layer with a relu activation function, and an output layer with a sigmoid activation function, since our aim is to do binary classification.
+
+## Evaluation
+
+After predictions were thresholded with a threshold of .5, the initial model had a training data accuracy of about 92% and a testing data accuracy of about 91%. The model was not at the absolute minima of the fitting graph, but instead one step up with a higher loss than the minima. 
