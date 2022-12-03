@@ -34,7 +34,7 @@ We then figured out which variables in our data were categorical, and what uniqu
 We recognized this as a potential source of bias if race emds up being an important factor in our prediction, as our model would likely be more effective at predicting heart disease in white people than other racial groups due to sample size.
 
 #### Numerical Data
-
+We created a heatmap
 
 
 ### Preprocessing
