@@ -34,8 +34,11 @@ We then figured out which variables in our data were categorical, and what uniqu
 We recognized this as a potential source of bias if race emds up being an important factor in our prediction, as our model would likely be more effective at predicting heart disease in white people than other racial groups due to sample size.
 
 #### Numerical Data
-We created a heatmap
+We created a heatmap and a pairplot to explore our numeric data. We chose not to include our categorical data even after enocding since most were binary valued and not ordered scales.
 
+[DESCRIBE CORRELATION MATRIX HERE]
+
+Our pairplot showed us the relationships between the various numeric variables as well as the distributions of each. BMI seemed to have a sort of skewed normal distribution, but all the others seemed to have distributions that were distinctly separated by the various data values. The scatter plots did not show much of a linear relationship between any of the variables. This is in accordance with the low correlations shown in the correlation matrix.
 
 ### Preprocessing
 After performing exploratory data anlysis with a pairplot and a correlation matrix, we label encoded our categorical variables. We opted for one-hot encoding for encoding the race of the person, as race is not a scale, nor is it binary. We then explored the distributions of race in our data set and discovered that over 75% of the data is listed as white. This could lead to our final model being better at predicting heart disease in white people than in other races. Finally, we normalized the numerical variables in our data to be between 0 and 1.
