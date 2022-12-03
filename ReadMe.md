@@ -43,12 +43,22 @@ Our pairplot showed us the relationships between the various numeric variables a
 After performing exploratory data anlysis, we label encoded our categorical variables. We opted for one-hot encoding for encoding the race of the person, as race is not a scale, nor is it binary. We then explored the distributions of race in our data set and discovered that over 75% of the data is listed as white. This could lead to our final model being better at predicting heart disease in white people than in other races. Finally, we normalized the numerical variables in our data to be between 0 and 1.
 
 ### Model 1
-Our initial model was built with three layers: an input layer with a tanh activation function, a hidden layer with a relu activation function, and an output layer with a sigmoid activation function, since our aim is to do binary classification.
+Our initial model was built with three layers: an input layer with a tanh activation function, a hidden layer with a relu activation function, and an output layer with a sigmoid activation function, since our aim is to do binary classification. Predictions were then thresholded with a threshold of 0.5. 
 
 ### Model 2
 
-## Evaluation
-
+## Results
+### Model 1
 After predictions were thresholded with a threshold of .5, the initial model had a training data accuracy of about 92% and a testing data accuracy of about 91%. The model was not at the absolute minima of the fitting graph, but instead one step up with a higher loss than the minima. 
+
+### Model 2
+
+## Discussion
+
+## Conclusion
+
+## Collaboration
+
+
 
 
