@@ -25,25 +25,165 @@ According to the CDC, heart disease is the leading cause of death in the US. To 
 We used the scikit-learn Python library in a [jupyter notebook](main.ipynb). 
 
 ### Data Exploration
-We first found that none of the observations had missing data or null values, so we did not have to do anything with those. 
+We first found that none of the observations had missing data or null values, so we did not have to do anything with those. We did this using
+
+```
+df.isna().sum()
+```
 
 #### Categorical Data
-We then figured out which variables in our data were categorical, and what unique values each variable had. We then plotted the frequency of the unique values of each categorical variable in bar charts. We found that a majority of survey participants did not have preexisting conditions such as skin cancer, heart disease, a previous stroke, difficulty walking, diabetes, asthma, or kidney disease. There were more non-smokers than smokers. The participants were almnost equally split between female and male, with more females. Additionally, there were more older participants from the ages 65-69, and older age groups tended to have more survey partcipants than younger age groups. More participants tended to rate their health as better rather than worse, with the most rating their general health as very good and the least rating their health as poor. We saw a huge disparity in our race distribution, with a clear majority of the survey participants being white.
+We then figured out which variables in our data were categorical, and what unique values each variable had using:
 
-We recognized this as a potential source of bias if race emds up being an important factor in our prediction, as our model would likely be more effective at predicting heart disease in white people than other racial groups due to sample size.
+```
+categoricals = df.select_dtypes(include=['object']).columns.tolist()
+for cat in categoricals:
+    print(f'{cat}: {sorted(df[cat].unique())}')
+```
+
+We then plotted the frequency of the unique values of each categorical variable in bar charts. We found that a majority of survey participants did not have preexisting conditions such as skin cancer, heart disease, a previous stroke, difficulty walking, diabetes, asthma, or kidney disease. There were more non-smokers than smokers. The participants were almnost equally split between female and male, with more females. Additionally, there were more older participants from the ages 65-69, and older age groups tended to have more survey partcipants than younger age groups. More participants tended to rate their health as better rather than worse, with the most rating their general health as very good and the least rating their health as poor, and that most said they were physically active. We saw a huge disparity in our race distribution, with a clear majority of the survey participants being white. The bar charts are shown below, created with the following code:
+
+```
+display(df['SkinCancer'].value_counts().plot(kind='bar', xlabel='SkinCancer', ylabel='Count', rot=0))
+display(df['HeartDisease'].value_counts().plot(kind='bar', xlabel='HeartDisease', ylabel='Count', rot=0))
+display(df['Stroke'].value_counts().plot(kind='bar', xlabel='Stroke', ylabel='Count', rot=0))
+display(df['DiffWalking'].value_counts().plot(kind='bar', xlabel='DiffWalking', ylabel='Count', rot=0))
+display(df['Diabetic'].value_counts().plot(kind='bar', xlabel='Diabetic', ylabel='Count', rot=0))
+display(df['Asthma'].value_counts().plot(kind='bar', xlabel='Asthma', ylabel='Count', rot=0))
+display(df['KidneyDisease'].value_counts().plot(kind='bar', xlabel='KidneyDisease', ylabel='Count', rot=0))
+display(df['Smoking'].value_counts().plot(kind='bar', xlabel='Smoking', ylabel='Count', rot=0))
+display(df['Sex'].value_counts().plot(kind='bar', xlabel='Sex', ylabel='Count', rot=0))
+display(df['AgeCategory'].value_counts().plot(kind='bar', xlabel='AgeCategory', ylabel='Count', rot=0))
+display(df['GenHealth'].value_counts().plot(kind='bar', xlabel='GenHealth', ylabel='Count', rot=0))
+display(df['PhysicalActivity'].value_counts().plot(kind='bar', xlabel='PhysicalActivity', ylabel='Count', rot=0))
+display(df['Race'].value_counts().plot(kind='bar', xlabel='Race', ylabel='Count', rot=0))
+```
+
+![Skin Cancer](./images/skin_cancer.png)
+![Heart Disease](./images/heart_disease.png)
+![Stroke](./images/stroke.png)
+![Difficulty Walking](./images/diff_walking.png)
+![Diabetes](./images/diabetic.png)
+![Asthma](./images/asthma.png)
+![Kidney Disease](./images/kidney_disease.png)
+![Smokers](./images/smoking.png)
+![Sex](./images/sex.png)
+![Age](./images/age_category.png)
+![Age](./images/age_categoty.png)
+![General Health](./images/gen_health.png)
+![Physical Activity](./images/physical_activity.png)
+![Race](./images/race.png)
+
+
+We recognized this as a potential source of bias if race ends up being an important factor in our prediction, as our model would likely be more effective at predicting heart disease in white people than other racial groups due to sample size.
 
 #### Numerical Data
 We created a heatmap and a pairplot to explore our numeric data. We chose not to include our categorical data even after enocding since most were binary valued and not ordered scales.
 
 [DESCRIBE CORRELATION MATRIX HERE]
 
-Our pairplot showed us the relationships between the various numeric variables as well as the distributions of each. BMI seemed to have a sort of skewed normal distribution, but all the others seemed to have distributions that were distinctly separated by the various data values. The scatter plots did not show much of a linear relationship between any of the variables. This is in accordance with the low correlations shown in the correlation matrix.
+Our pairplot showed us the relationships between the various numeric variables as well as the distributions of each. We created the pariplot with:
+
+```
+sns.pairplot(df, hue='HeartDisease', plot_kws=dict(alpha=0.4))
+```
+which yielded a plot of:
+![Pairplot](./images/pairplot.png)
+
+BMI seemed to have a sort of skewed normal distribution, but all the others seemed to have distributions that were distinctly separated by the various data values. The scatter plots did not show much of a linear relationship between any of the variables. This is in accordance with the low correlations shown in the correlation matrix.
+
+We confirmed that SleepTime, MentalHealth, and PhysicalHealth had discrete integer values with the following commands:
+
+```
+df['SleepTime'].unique() # see the discrete integer values 
+df['MentalHealth'].unique()
+df['PhysicalHealth'].unique()
+```
+
+
 
 ### Preprocessing
-After performing exploratory data anlysis, we label encoded our categorical variables. We opted for one-hot encoding for encoding the race of the person, as race is not a scale, nor is it binary. We then explored the distributions of race in our data set and discovered that over 75% of the data is listed as white. This could lead to our final model being better at predicting heart disease in white people than in other races. Finally, we normalized the numerical variables in our data to be between 0 and 1.
+After performing exploratory data anlysis, we label encoded our categorical variables. We opted for one-hot encoding for encoding the race of the person, as race is not a scale, nor is it binary. We did this with the following code:
+
+* Label Encoding
+```
+encode = lambda unique: dict( zip( sorted(unique), range(len(unique)) ) )
+
+# encode( df[categoricals[0]].unique() )
+encoding = {'GenHealth': {'Poor': 0, 'Fair': 1, 'Good': 2, 'Very good': 3, 'Excellent': 4}}
+
+# perform genhealth encoding manually since no sorting function
+df_encode = df.copy()
+for c in categoricals:
+  if c != 'GenHealth': encoding[c] = encode(df[c].unique()) # save to encoding
+  df_encode[c] = df.apply( lambda row: encoding[c][row[c]], axis=1) # perform encoding
+
+encoding
+```
+* One-Hot Encoding
+```
+df_encode['American Indian/Alaskan Native'] = df_encode.apply( lambda x: int(x.Race == 0), axis=1)
+df_encode['Asian'] = df_encode.apply( lambda x: int(x.Race == 1), axis=1)
+df_encode['Black'] = df_encode.apply( lambda x: int(x.Race == 2), axis=1)
+df_encode['Hispanic'] = df_encode.apply( lambda x: int(x.Race == 3), axis=1)
+df_encode['White'] = df_encode.apply( lambda x: int(x.Race == 5), axis=1)
+df_encode['Other Race'] = df_encode.apply( lambda x: int(x.Race == 4), axis=1)
+df_encode = df_encode.drop(columns=['Race'])
+```
+
+
+We then explored the distributions of race in our data set and discovered that over 75% of the data is listed as white using the following:
+
+```
+races = df_encode[['Asian', 'Black', 'Hispanic', 'American Indian/Alaskan Native', 'White', 'Other Race']].sum()
+print(races / races.sum() * 100)
+```
+
+This could lead to our final model being better at predicting heart disease in white people than in other races. Finally, we normalized the numerical variables in our data to be between 0 and 1 using the following:
+
+```
+df_num = df.select_dtypes(include=['float64'])
+
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
+df_num_norm = scaler.fit(df_num).transform(df_num)
+df_num_norm = pd.DataFrame(df_num_norm, columns=df_num.columns, index=df_num.index)
+df_num_norm.head()
+
+# adding scaled data back into full data set
+numericals = df.select_dtypes(include=['float64']).columns
+dft = df_encode.copy()
+for colname in numericals:
+    dft[colname] = df_num_norm[colname]
+```
 
 ### Model 1
-Our initial model was built with three layers: an input layer with a tanh activation function, a hidden layer with a relu activation function, and an output layer with a sigmoid activation function, since our aim is to do binary classification. Predictions were then thresholded with a threshold of 0.5. 
+Our initial model was built with three layers: an input layer with a tanh activation function and 4 units, a hidden layer with a relu activation function and 4 units, and an output layer with a sigmoid activation function, since our aim is to do binary classification. Predictions were then thresholded with a threshold of 0.5. 
+
+We split our data into training and testing sets:
+```
+from sklearn.model_selection import train_test_split
+
+X = dft.drop(columns=['HeartDisease'])
+y = dft['HeartDisease']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+dims = X_train.shape[1]
+```
+
+We then created and fit the model with:
+```
+from keras.models import Sequential
+from keras.layers import Dense
+
+model = Sequential()
+model.add(Dense(units=4, activation='tanh', input_dim=dims,  ))
+model.add(Dense(units=4, activation='relu', input_dim=dims,))
+model.add(Dense(units=1, activation='sigmoid', input_dim=dims,  ))
+
+model.compile(optimizer = 'rmsprop', loss = 'binary_crossentropy')
+history = model.fit(X_train.astype('float'), y_train, batch_size = 1, epochs = 10)
+```
 
 ### Model 2
 
