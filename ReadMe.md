@@ -196,10 +196,28 @@ After predictions were thresholded with a threshold of .5, the initial model had
 
 ## Discussion
 
+Our model reports an accuracy of 0.91, which means that we correctly categorized 91% of our testing data as having heart disease or not. 
+We had a precision of 0.92, which means that of the patients we identified as having heart disease, 92% of them actually had heart disease, the other 8% are false positives.
+We had a recall of 0.99, which means that of all the observations who did have heart disease, we correctly identified 99% of them. 
+
+What these numbers tell us is that if you have heart disease, our model has a 99% chance of identifying it, but if our model identifies you as having heart disease, there is only a 92% chance that you actually have heart disease.
+We like the emphasis on recall, and reducing the number of false negatives. It's much better to be identified as possibly having heart disease but actually being healthy than being told you're healthy and actually not.
+
+Due to this difference in precision and recall, we think it would be better to use this model as an initial diagnosis, followed by confirmation by a physician. 
+Currently, the best tests for heart disease are invasive tests involving blood work profiling cholesterol or protein levels.
+EKG's are minimally invasive but require a visit to the doctor or expensive home equipment, and one study by Taber, Levya, Persoskie found that over 30% of Americans they surveyed avoided seeing the doctor for various reasons involving high cost, lack of health insurance, etc. 
+
+Our model can provide a method for an initial screening, where patients who test positive can be referred for additional tests.
+Our model is non-invasive and can be done at home, and this may allow less privileged communities to get a better understanding of their health. 
+
 ## Conclusion
+
+## Sources 
+
+Taber, Jennifer M et al. “Why do people avoid medical care? A qualitative study using national data.” Journal of general internal medicine vol. 30,3 (2015): 290-7. doi:10.1007/s11606-014-3089-1
 
 ## Collaboration
 
-
+Dylan Ang: Contributed to initial data exploration and preprocessing, scaling and the Discussion section.
 
 
