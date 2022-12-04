@@ -67,7 +67,7 @@ display(df['Race'].value_counts().plot(kind='bar', xlabel='Race', ylabel='Count'
 ![Kidney Disease](./images/kidney_disease.png)
 ![Smokers](./images/smoking.png)
 ![Sex](./images/sex.png)
-![Age](./images/age_category.png)
+<!-- ![Age](./images/age_category.png) -->
 ![Age](./images/age_categoty.png)
 ![General Health](./images/gen_health.png)
 ![Physical Activity](./images/physical_activity.png)
@@ -79,7 +79,7 @@ We recognized this as a potential source of bias if race ends up being an import
 #### Numerical Data
 We created a heatmap and a pairplot to explore our numeric data. We chose not to include our categorical data even after enocding since most were binary valued and not ordered scales.
 
-[DESCRIBE CORRELATION MATRIX HERE]
+![Heatmap](./images/heatmap.png)
 
 Our pairplot showed us the relationships between the various numeric variables as well as the distributions of each. We created the pariplot with:
 
@@ -188,6 +188,7 @@ history = model.fit(X_train.astype('float'), y_train, batch_size = 1, epochs = 1
 ### Model 2
 
 ## Results
+
 ### Model 1
 After predictions were thresholded with a threshold of .5, the initial model had a training data accuracy of about 92% and a testing data accuracy of about 91%. The model was not at the absolute minima of the fitting graph, but instead one step up with a higher loss than the minima. 
 
