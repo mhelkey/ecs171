@@ -186,6 +186,33 @@ history = model.fit(X_train.astype('float'), y_train, batch_size = 1, epochs = 1
 ```
 
 ### Model 2
+We also created a Logistic Regression model with:
+```
+from sklearn.linear_model import LogisticRegression
+
+# training
+model2 = LogisticRegression(max_iter=1000, random_state=42)
+model2.fit(X_train, y_train)
+yhat_train = model2.predict(X_train)
+yhat_test = model2.predict(X_test)
+```
+
+We used a classification report to find the accuracy metrics with this model, and created a similar one with overfitting to increase our recall.
+
+### Model 3
+We created a Logistic Regression model with overfitting:
+```
+from imblearn.over_sampling import RandomOverSampler
+ros = RandomOverSampler(random_state=42)
+X_train_res, y_train_res = ros.fit_resample(X_train, y_train)
+# training
+model3 = LogisticRegression(max_iter=1000, random_state=42)
+model3.fit(X_train_res, y_train_res)
+yhat_train = model3.predict(X_train)
+yhat_test = model3.predict(X_test)
+```
+
+This helped increase recall but lowered accuracy.
 
 ## Results
 
@@ -193,6 +220,7 @@ history = model.fit(X_train.astype('float'), y_train, batch_size = 1, epochs = 1
 After predictions were thresholded with a threshold of .5, the initial model had a training data accuracy of about 92% and a testing data accuracy of about 91%. The model was not at the absolute minima of the fitting graph, but instead one step up with a higher loss than the minima. 
 
 ### Model 2
+
 
 ## Discussion
 
