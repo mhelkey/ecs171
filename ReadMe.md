@@ -197,7 +197,7 @@ yhat_train = model2.predict(X_train)
 yhat_test = model2.predict(X_test)
 ```
 
-We used a classification report to find the accuracy metrics with this model, and created a similar one with overfitting to increase our recall.
+We used a classification report to find the performance metrics with this model, and created a similar model using overfitting to increase recall for people with heart disease.
 
 ### Model 3
 We created a Logistic Regression model with overfitting:
@@ -212,7 +212,7 @@ yhat_train = model3.predict(X_train)
 yhat_test = model3.predict(X_test)
 ```
 
-This helped increase recall but lowered accuracy.
+This helped increase recall for people with heart disease but lowered accuracy.
 
 ## Results
 
@@ -239,6 +239,11 @@ Our model can provide a method for an initial screening, where patients who test
 Our model is non-invasive and can be done at home, and this may allow less privileged communities to get a better understanding of their health. 
 
 ## Conclusion
+We see from the results that the first neural network model was made redundant by our logistic regression models which ran much faster. We also saw that there was a major problem of the target not being balanced which we only really considered with our last model via random oversampling. One thing to consider is if other sampling strategies like [SMOTE](https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/) could yield better results instead of just duplicating randomly from the minority class.
+
+We could also approach the task with a different type of model. We were able to see some indication of the important factors of our oversampled logistic regression via the coefficients, but we could get another indication via methods of a Decision Tree learning. However, we would need to be cognizant of the sensitivity of this approach to overfitting and imbalanced data. We could then use a Random Forest model with [some sampling like stratified bootstrap](https://timvink.nl/post-balanced-trees/) to maybe get more stable results. With this sort of model, we could then interpret the hierarchical structure of the final resulting tree.
+
+Lastly, we could go back to an approach with a neural network. There was various tuning that could have been done for such a task like changing the structure of the neural network via the number of layers and activation functions, and there are also training parameters like optimizers, batch size, and number of epochs that might better minimize loss or be more stable in convergence.
 
 ## Sources 
 
@@ -247,5 +252,8 @@ Taber, Jennifer M et al. “Why do people avoid medical care? A qualitative stud
 ## Collaboration
 
 Dylan Ang: Contributed to initial data exploration and preprocessing, scaling and the Discussion section.
+
 Nandhini Sridhar: Contributed to initial model building, Methods section, and introduction about the dataset and abstract.
+
+Trevor Lopez: Contributed ideas for the initial data exploration and for the preprocessing encodings. Also wrote everything for the logistic regession model sections of the jupyter notebook. In the writeup, I worked on the Conclusion section.
 
