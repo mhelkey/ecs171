@@ -225,11 +225,12 @@ After predictions were thresholded with a threshold of .5, the initial model had
 ## Discussion
 
 Our model reports an accuracy of 0.91, which means that we correctly categorized 91% of our testing data as having heart disease or not. 
-We had a precision of 0.92, which means that of the patients we identified as having heart disease, 92% of them actually had heart disease, the other 8% are false positives.
-We had a recall of 0.99, which means that of all the observations who did have heart disease, we correctly identified 99% of them. 
+We had a precision of 0.92 for 0, which means that of the patients we identified as not having heart disease, 92% of them did not have heart disease, the other 8% are false negatives.
+We had a recall of 0.99 for 0, which means that of all the observations who did not have heart disease, we correctly identified 99% of them. 
 
-What these numbers tell us is that if you have heart disease, our model has a 99% chance of identifying it, but if our model identifies you as having heart disease, there is only a 92% chance that you actually have heart disease.
-We like the emphasis on recall, and reducing the number of false negatives. It's much better to be identified as possibly having heart disease but actually being healthy than being told you're healthy and actually not.
+What these numbers tell us is that if you do not have heart disease, our model has a 99% chance of identifying you as such, but if our model identifies you as not having heart disease, there is only a 92% chance that you actually do not have heart disease.
+Future iterations should focus on higher recall, to minimize false negatives.
+In addition, our precision and recall are much lower for 1, or the chance of having heart disease. Future models can try to increase these by oversampling.
 
 Due to this difference in precision and recall, we think it would be better to use this model as an initial diagnosis, followed by confirmation by a physician. 
 Currently, the best tests for heart disease are invasive tests involving blood work profiling cholesterol or protein levels.
