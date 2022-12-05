@@ -219,5 +219,5 @@ Taber, Jennifer M et al. “Why do people avoid medical care? A qualitative stud
 ## Collaboration
 
 Dylan Ang: Contributed to initial data exploration and preprocessing, scaling and the Discussion section.
-
+Nandhini Sridhar: Contributed to initial model building, Methods section, and introduction about the dataset and abstract.
 
