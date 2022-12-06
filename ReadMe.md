@@ -217,10 +217,27 @@ This helped increase recall for people with heart disease but lowered accuracy.
 ## Results
 
 ### Model 1
-After predictions were thresholded with a threshold of .5, the initial model had a training data accuracy of about 92% and a testing data accuracy of about 91%. The model was not at the absolute minima of the fitting graph, but instead one step up with a higher loss than the minima. 
+After predictions were thresholded with a threshold of .5, the initial model had a training data accuracy of about 92% and a testing data accuracy of about 91%. The model was not at the absolute minima of the fitting graph, but instead one step up with a higher loss than the minima. Additionally, this model took well over half an hour to train.
+
+Although average testing accuracy was 91%, the accuracy of correctly identifying a true positive for heart disease is only 49%. Additionally, the recall for a true positive is only 9%, and the f1-score is also low at .15. However, correctly idenfying a true negative in the testing data had a 92% accuracy, with a recall of 99% and an f1-score of .95.
+
+##
+
+Model 1 Loss Training
+
+![Skin Cancer](./images/model1_loss.png)
 
 ### Model 2
 
+Again after predictions were thresholded with a threshold of .5, model 2's linear regression algorithm had an average training data accuracy of about 92%, and an average testing data accuracy of about 91%.  This model only took a matter of seconds to train, making it far faster to train than the neural network model.
+
+Although average testing accuracy was 91%, there was only a 53% of correctly identifying a true positive, with a low recall of 11%, and a low f1-score of .17. However, correctly identifying a true negative in the testing data had a 93% chance, with a high recall of 99% and f1-score of .95.
+
+### Model 3
+
+Model 3's linear regression with oversampling resulted in an average training data accuracy of about 75% and average testing data accuracy of 75% with a .5 threshold. This model also only took a matter of seconds to train.
+
+With an average testing accuracy of 75%, this model has a 97% chance of correctly identifying a true negative, with a high recall of 75% and .85 f1-score. However, there was only 23% chance of correctly identifying a true positive, with a high recall of 70% and low .35 f1-score.
 
 ## Discussion
 
@@ -257,4 +274,6 @@ Dylan Ang: Contributed to initial data exploration and preprocessing, scaling an
 Nandhini Sridhar: Contributed to initial model building, Methods section, and introduction about the dataset and abstract.
 
 Trevor Lopez: Contributed ideas for the initial data exploration and for the preprocessing encodings. Also wrote everything for the logistic regession model sections of the jupyter notebook. In the writeup, I worked on the Conclusion section.
+
+Matthew Helkey: Contributed to intial data exploration and preprocessing, evaluating model, and Results section of writeup.
 
